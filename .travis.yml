@@ -1,0 +1,15 @@
+dist: xenial
+
+services:
+  - docker
+
+before_install:
+  - echo 'DOCKER_OPTS="$DOCKER_OPTS --debug --registry-mirror=https://mirror.gcr.io"'
+  - sudo service docker restart
+  - docker system info
+
+script:
+  - docker pull jonashackt/spring-boot-buildpack:latest
+  - docker run -d --name spring-boot-buildpack jonashackt/spring-boot-buildpack:latest
+  - docker logs spring-boot-buildpack
+
